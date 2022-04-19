@@ -1,5 +1,5 @@
 module.exports = {
-  HOST: "localhost",
+  HOST: 'localhost',
   PORT: 27017,
-  DB: "bezkoder_db"
+  DB: '32Analytics_DB'
 };
