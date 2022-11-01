@@ -1,3 +1,3 @@
 module.exports = {
-  secret: 'bezcoder-secret-key'
+  secret: 'random-anon-string'
 };
