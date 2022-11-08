@@ -6,16 +6,16 @@ const { config } = require('dotenv');
 
 const app = express();
 
-// const corsOptions = {
-// 	origin: 'http://localhost:8081'
-// };
+const corsOptions = {
+	origin: '*'
+};
 
-// app.use(cors(corsOptions));
-app.use((req, res, next) => {
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	next();
-});
+app.use(cors(corsOptions));
+// app.use((req, res, next) => {
+// 	res.setHeader('Access-Control-Allow-Origin', '*');
+// 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+// 	next();
+// });
 
 // parse requests of content-type - application/json
 app.use(express.json());
