@@ -10,16 +10,16 @@ module.exports = function(app) {
 
 	app.post(
 		// LOCAL -> '/api/auth/signup',
-		'/api/auth/signup',
+		'/auth/signup',
 		[ verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted ],
 		controller.signup
 	);
 
 	// LOCAL app.post('/api/auth/signin', controller.signin);
-	app.post('/api/auth/signin', controller.signin);
+	app.post('/auth/signin', controller.signin);
 
   // Add /api prefix for local
-	app.post('/api/auth/stripe-payment', async (req, res) => {
+	app.post('/auth/stripe-payment', async (req, res) => {
 		let { amount, id } = req.body;
 		try {
 			const payment = await stripe.paymentIntents.create({
