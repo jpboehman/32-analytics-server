@@ -19,7 +19,7 @@ module.exports = function(app) {
 	app.post('/api/auth/signin', controller.signin);
 
   // Add /api prefix for local
-	app.post('api/auth/stripe-payment', async (req, res) => {
+	app.post('/api/auth/stripe-payment', async (req, res) => {
 		let { amount, id } = req.body;
 		try {
 			const payment = await stripe.paymentIntents.create({
