@@ -56,7 +56,7 @@ require('./app/routes/user.routes')(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 // Would be used for staging, production, etc
-// const nodeEnv = process.env.NODE_ENV;
+const version = 1;
 // const mySetting = process.env.NODE_ENV;
 app.listen(PORT, () => {
 	console.log(`Server is running on port ${PORT}.`);
