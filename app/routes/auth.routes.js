@@ -1,4 +1,5 @@
 const { verifySignUp } = require('../middlewares');
+const cors = require('cors');
 const controller = require('../controllers/auth.controller');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
 
@@ -16,10 +17,10 @@ module.exports = function(app) {
 	);
 
 	// LOCAL app.post('/api/auth/signin', controller.signin);
-	app.post('/api/auth/signin', controller.signin);
+	app.post('/api/auth/signin', cors(), controller.signin);
 
-  // Add /api prefix for local
-	app.post('/api/auth/stripe-payment', async (req, res) => {
+	// Add /api prefix for local
+	app.post('/api/auth/stripe-payment', cors(), async (req, res) => {
 		let { amount, id } = req.body;
 		try {
 			const payment = await stripe.paymentIntents.create({
