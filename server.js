@@ -7,7 +7,7 @@ const { config } = require('dotenv');
 const app = express();
 
 const corsOptions = {
-	origin: 'https://master--thirtytwoanalytics.netlify.app'
+	origin: '*'
 };
 
 app.use(cors(corsOptions));
