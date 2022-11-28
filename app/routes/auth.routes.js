@@ -3,7 +3,7 @@ const { verifySignUp } = require('../middlewares');
 const cors = require('cors');
 const controller = require('../controllers/auth.controller');
 // Test Stripe Mode:
-const stripe = require('stripe')(process.env.STRIPE_SECRET_PRODUCTION);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
 
 module.exports = function(app) {
   app.use((req, res, next) => {
