@@ -3,7 +3,8 @@ const { verifySignUp } = require('../middlewares');
 const cors = require('cors');
 const controller = require('../controllers/auth.controller');
 // Test Stripe Mode:
-const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
+// const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_PRODUCTION;
 
 module.exports = function(app) {
   app.use((req, res, next) => {
@@ -21,7 +22,6 @@ module.exports = function(app) {
   // LOCAL app.post('/api/auth/signin', controller.signin);
   app.post('/api/auth/signin', cors(), controller.signin);
 
-  // Add /api prefix for local
   app.post('/api/auth/stripe-payment', cors(), async (req, res) => {
     const { amount, id } = req.body;
     try {
