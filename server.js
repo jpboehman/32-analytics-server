@@ -26,6 +26,7 @@ app.use(
 	})
 );
 
+// Express is a middleware for middleware and handling various API routes
 const db = require('./app/models');
 const Role = db.role;
 

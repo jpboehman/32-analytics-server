@@ -22,6 +22,9 @@ module.exports = function(app) {
   // LOCAL app.post('/api/auth/signin', controller.signin);
   app.post('/api/auth/signin', cors(), controller.signin);
 
+  // Forgot password route:
+  app.post('/api/auth/reset-password', cors(), controller.resetPassword);
+
   app.post('/api/auth/stripe-payment', cors(), async (req, res) => {
     const { amount, id } = req.body;
     try {

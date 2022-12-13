@@ -4,6 +4,7 @@ const db = require('../models');
 const User = db.user;
 const Role = db.role;
 
+// Middleware functions examine and process the request BEFORE the request makes it to the controller's business logic
 verifyToken = (req, res, next) => {
   let token = req.headers['x-access-token'];
   console.log(token)
