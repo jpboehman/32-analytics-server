@@ -23,7 +23,10 @@ module.exports = function(app) {
   app.post('/api/auth/signin', cors(), controller.signin);
 
   // Forgot password route:
-  app.post('/api/auth/reset-password', cors(), controller.resetPassword);
+  app.get('/api/auth/reset', cors(), controller.reset);
+  app.post('/api/auth/forgot-password', cors(), controller.forgotPassword);
+  app.put('/api/auth/updatePasswordViaEmail', cors(), controller.updatePasswordViaEmail);
+
 
   app.post('/api/auth/stripe-payment', cors(), async (req, res) => {
     const { amount, id } = req.body;

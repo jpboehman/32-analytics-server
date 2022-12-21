@@ -32,7 +32,11 @@ const Role = db.role;
 
 config();
 db.mongoose
-	.connect(process.env.dbURI, {
+	// .connect(process.env.dbURI, {
+	// 	useNewUrlParser: true,
+	// 	useUnifiedTopology: true
+	// })
+	.connect('mongodb://127.0.0.1:27017/32Analytics_DB', {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})

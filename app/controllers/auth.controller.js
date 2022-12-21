@@ -109,33 +109,7 @@ exports.signin = (req, res) => {
     });
 };
 
-exports.reset = (req, res) => {
-  User.findOne({
-    $where: {
-      resetPasswordToken: req.query.resetPasswordToken,
-      resetPasswordExpires: {
-        $gt: Date.now(),
-      },
-    },
-  })
-    .populate('roles', '-__v')
-    .exec((err, user) => {
-      if (err) {
-        res.status(500).send({ message: 'Password reset link invalid or has expired' });
-        return;
-      }
-      if (!user) {
-        return res.status(404).send({ message: 'User Not found.' });
-      } else {
-        res.status(200).send({
-          username: user.username,
-          message: 'Password reset link is VALID.'
-        })
-      }
-    });
-}
-
-exports.resetPassword = (req, res) => {
+exports.forgotPassword = (req, res) => {
   User.findOne({
     email: req.body.email
   })
@@ -173,7 +147,7 @@ exports.resetPassword = (req, res) => {
         subject: 'Link to Reset Password for 32Analytics',
         text: `You are receiving this because you (or someone else) have requested the reset of the password for your account. \n\n`
           + 'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving this email:\n\n'
-          + `http://localhost:8081/reset/${token}\n\n`
+          + `http://localhost:3000/reset-password-submit/${token}\n\n`
           + 'If you did not request this, please ignore this email, as your password will remain unchanged.\n',
       };
 
@@ -188,12 +162,45 @@ exports.resetPassword = (req, res) => {
     });
 }
 
+exports.reset = (req, res) => {
+  console.log(req.query)
+  User.findOne({
+    $where: {
+      resetPasswordToken: req.query.resetPasswordToken,
+      resetPasswordExpires: {
+        $gt: Date.now(),
+      },
+    },
+  })
+    .populate('roles', '-__v')
+    .exec((err, user) => {
+      if (err) {
+        console.error('Password reset link is invalid or expired.')
+        res.status(403).send({ message: 'Password reset link is invalid or has expired.' });
+        return;
+      }
+      if (!user) {
+        return res.status(404).send({ message: 'User not found.' });
+      } else {
+        // Ensuring that the user has a valid reset token in order for them to access to the reset component
+        res.status(200).send({
+          username: user.username,
+          message: 'Password reset link is VALID.'
+        })
+      }
+    });
+}
+
+// User needs to also hit updatePasswordViaEmail
+const BCRYPT_SALT_ROUNDS = 12;
 exports.updatePasswordViaEmail = (req, res) => {
-  const BCRYPT_SALT_ROUNDS = 12;
   User.findOne({
     where: {
-      // email: req.body.email,
       username: req.body.username,
+      resetPasswordToken: req.body.resetPasswordToken,
+      resetPasswordExpires: {
+        $gt: Date.now(),
+      }
     }
   })
     .populate('roles', '-__v')
