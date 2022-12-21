@@ -113,8 +113,8 @@ exports.forgotPassword = (req, res) => {
   User.findOne({
     email: req.body.email
   })
-    .populate('roles', '-__v')
-    .exec((err, user) => {
+    // .populate('roles', '-__v')
+    .exec(async (err, user) => {
       if (err) {
         console.log(err)
         res.status(500).send({ message: err });
@@ -123,16 +123,16 @@ exports.forgotPassword = (req, res) => {
       if (!user) {
         return res.status(404).send({ message: 'User Not found.' });
       }
-      console.log(user);
 
       const token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: 86400,
-      })
-      user.update({
+      });
+      // User update working
+      await user.update({
         resetPasswordToken: token,
         resetPasswordExpires: Date.now() + 3600000
       });
-
+      
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -163,17 +163,16 @@ exports.forgotPassword = (req, res) => {
 }
 
 exports.reset = (req, res) => {
-  console.log(req.query)
+  // WORKING NOW!
   User.findOne({
-    $where: {
-      resetPasswordToken: req.query.resetPasswordToken,
-      resetPasswordExpires: {
-        $gt: Date.now(),
-      },
+    resetPasswordToken: req.query.resetPasswordToken,
+    resetPasswordExpires: {
+      $gt: Date.now(),
     },
   })
     .populate('roles', '-__v')
     .exec((err, user) => {
+      console.log(user)
       if (err) {
         console.error('Password reset link is invalid or expired.')
         res.status(403).send({ message: 'Password reset link is invalid or has expired.' });

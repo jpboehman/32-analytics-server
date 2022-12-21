@@ -36,7 +36,7 @@ db.mongoose
 	// 	useNewUrlParser: true,
 	// 	useUnifiedTopology: true
 	// })
-	.connect('mongodb://127.0.0.1:27017/32Analytics_DB', {
+	.connect('mongodb://127.0.0.1:27017/32_Analytics', {
 		useNewUrlParser: true,
 		useUnifiedTopology: true
 	})
