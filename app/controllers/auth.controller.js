@@ -132,7 +132,7 @@ exports.forgotPassword = (req, res) => {
         resetPasswordToken: token,
         resetPasswordExpires: Date.now() + 3600000
       });
-      
+
       const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -172,7 +172,6 @@ exports.reset = (req, res) => {
   })
     .populate('roles', '-__v')
     .exec((err, user) => {
-      console.log(user)
       if (err) {
         console.error('Password reset link is invalid or expired.')
         res.status(403).send({ message: 'Password reset link is invalid or has expired.' });
@@ -190,20 +189,18 @@ exports.reset = (req, res) => {
     });
 }
 
-// User needs to also hit updatePasswordViaEmail
-const BCRYPT_SALT_ROUNDS = 12;
+const BCRYPT_SALT_ROUNDS = 8;
 exports.updatePasswordViaEmail = (req, res) => {
+  console.log(req.body)
   User.findOne({
-    where: {
-      username: req.body.username,
-      resetPasswordToken: req.body.resetPasswordToken,
-      resetPasswordExpires: {
-        $gt: Date.now(),
-      }
+    username: req.body.username,
+    resetPasswordToken: req.body.resetPasswordToken,
+    resetPasswordExpires: {
+      $gt: Date.now(),
     }
   })
     .populate('roles', '-__v')
-    .exec((err, user) => {
+    .exec(async (err, user) => {
       if (err) {
         res.status(500).send({ message: 'Password reset link invalid or has expired' });
         return;
@@ -212,21 +209,16 @@ exports.updatePasswordViaEmail = (req, res) => {
         return res.status(404).send({ message: 'User Not found.' });
       } else {
         console.log('User who has requested password change has been found');
-        bcrypt
-          .hash(req.body.password, BCRYPT_SALT_ROUNDS)
-          .then(hashedPassword => {
-            user.update({
-              password: hashedPassword,
-              resetPasswordToken: null,
-              resetPasswordExpires: null,
-            });
-          })
-          .then(() => {
-            console.log('Password updated successfully.')
-            res.status(200).send({
-              message: 'Password reset submission was submitted successfully.'
-            })
-          })
+        const hashedPassword = await bcrypt.hashSync(req.body.password, BCRYPT_SALT_ROUNDS)
+        await user.update({
+          password: hashedPassword,
+          resetPasswordToken: null,
+          resetPasswordExpires: null,
+        });
+        console.log('Password updated successfully.')
+        res.status(200).send({
+          message: 'Password reset submission was submitted successfully.'
+        })
       }
     });
 }

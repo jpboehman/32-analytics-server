@@ -25,7 +25,7 @@ module.exports = function(app) {
   // Forgot password route:
   app.get('/api/auth/reset', cors(), controller.reset);
   app.post('/api/auth/forgot-password', cors(), controller.forgotPassword);
-  app.put('/api/auth/updatePasswordViaEmail', cors(), controller.updatePasswordViaEmail);
+  app.put('/api/auth/update-password-via-email', cors(), controller.updatePasswordViaEmail);
 
 
   app.post('/api/auth/stripe-payment', cors(), async (req, res) => {
