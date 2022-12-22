@@ -147,7 +147,7 @@ exports.forgotPassword = (req, res) => {
         subject: 'Link to Reset Password for 32Analytics',
         text: `You are receiving this because you (or someone else) have requested the reset of the password for your account. \n\n`
           + 'Please click on the following link, or paste this into your browser to complete the process within one hour of receiving this email:\n\n'
-          + `http://localhost:3000/reset-password-submit/${token}\n\n`
+          + `https://thirtytwoanalytics.com/reset-password-submit/${token}\n\n`
           + 'If you did not request this, please ignore this email, as your password will remain unchanged.\n',
       };
 
