@@ -113,7 +113,7 @@ exports.forgotPassword = (req, res) => {
   User.findOne({
     email: req.body.email
   })
-    // .populate('roles', '-__v')
+    .populate('roles', '-__v')
     .exec(async (err, user) => {
       if (err) {
         console.log(err)
