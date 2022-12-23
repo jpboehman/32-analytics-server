@@ -25,7 +25,7 @@ module.exports = function (app) {
   app.post('/api/auth/forgot-password', cors(), controller.forgotPassword);
   app.put('/api/auth/update-password-via-email', cors(), controller.updatePasswordViaEmail);
 
-  app.post('/api/create-customer-portal-session', cors(), async (req, res) => {
+  app.post('/api/auth/create-customer-portal-session', cors(), async (req, res) => {
     try {
       const { id, username, email } = req.body.params;
       const customer = await stripe.customers.search({
