@@ -27,11 +27,11 @@ module.exports = function (app) {
 
   app.post('/api/auth/create-customer-portal-session', async (req, res) => {
     try {
-      const { id, username, email } = req.body.params;
+      const { email } = req.body.params;
       const customer = await stripe.customers.search({
         query: `email:\'${email}\'`,
       });
-      console.log(customer);
+      
       const custId = customer.data[0].id;
       if (!custId) {
         res.status(404).send({ message: 'User not found' });
