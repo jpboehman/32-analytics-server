@@ -13,6 +13,7 @@ verifyToken = (req, res, next) => {
     return res.status(403).send({ message: 'No token provided!' });
   }
 
+  // Benefit of JWT's is that they can be validated iwth no database lookup required
   jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {
       return res.status(401).send({ message: 'Unauthorized!' });
@@ -47,7 +48,6 @@ isAdmin = (req, res, next) => {
         }
 
         res.status(403).send({ message: 'Require Admin Role!' });
-
       }
     );
   });
@@ -78,7 +78,6 @@ isModerator = (req, res, next) => {
         }
 
         res.status(403).send({ message: 'Require Moderator Role!' });
-
       }
     );
   });

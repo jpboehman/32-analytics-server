@@ -6,20 +6,18 @@ const controller = require('../controllers/auth.controller');
 // const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
 const stripe = require('stripe')(process.env.STRIPE_SECRET_PRODUCTION);
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'x-access-token, Origin, Content-Type, Accept');
     next();
   });
 
   app.post(
-    // LOCAL -> '/api/auth/signup',
     '/api/auth/signup',
     [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted],
     controller.signup
   );
 
-  // LOCAL app.post('/api/auth/signin', controller.signin);
   app.post('/api/auth/signin', cors(), controller.signin);
 
   // Forgot password route:
@@ -27,6 +25,23 @@ module.exports = function(app) {
   app.post('/api/auth/forgot-password', cors(), controller.forgotPassword);
   app.put('/api/auth/update-password-via-email', cors(), controller.updatePasswordViaEmail);
 
+  app.post('/api/create-customer-portal-session', async (req, res) => {
+      const { id, username, email } = req.body.params;
+      const customer = await stripe.customers.search({
+        query: `email:\'${email}\'`,
+      });
+      const custId = customer.data[0].id;
+      if (!custId) {
+        res.status(404).send({ message: 'User not found' });
+      }
+
+      const session = await stripe.billingPortal.sessions.create({
+        customer: custId,
+        return_url: 'https://thirtytwoanalytics.com',
+      });
+    
+      res.status(200).send({ redirectUrl: session.url });
+  });
 
   app.post('/api/auth/stripe-payment', cors(), async (req, res) => {
     const { amount, id } = req.body;
