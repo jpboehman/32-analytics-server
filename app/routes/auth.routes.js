@@ -45,7 +45,7 @@ module.exports = function (app) {
 
       res.status(200).send({ redirectUrl: session.url });
     } catch (error) {
-      res.status(400).send({ message: 'Error' })
+      res.status(400).send({ message: error })
     }
   });
 
