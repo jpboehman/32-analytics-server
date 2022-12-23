@@ -32,6 +32,7 @@ module.exports = function (app) {
         query: `email:\'${email}\'`,
       });
       const custId = customer.data[0].id;
+      console.log(customer);
       if (!custId) {
         res.status(404).send({ message: 'User not found' });
       }
