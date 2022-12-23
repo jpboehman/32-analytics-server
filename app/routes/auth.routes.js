@@ -25,7 +25,8 @@ module.exports = function (app) {
   app.post('/api/auth/forgot-password', cors(), controller.forgotPassword);
   app.put('/api/auth/update-password-via-email', cors(), controller.updatePasswordViaEmail);
 
-  app.post('/api/create-customer-portal-session', async (req, res) => {
+  app.post('/api/create-customer-portal-session', cors(), async (req, res) => {
+    try {
       const { id, username, email } = req.body.params;
       const customer = await stripe.customers.search({
         query: `email:\'${email}\'`,
@@ -39,8 +40,11 @@ module.exports = function (app) {
         customer: custId,
         return_url: 'https://thirtytwoanalytics.com',
       });
-    
+
       res.status(200).send({ redirectUrl: session.url });
+    } catch (error) {
+      res.status(400).send({ message: 'Error' })
+    }
   });
 
   app.post('/api/auth/stripe-payment', cors(), async (req, res) => {
