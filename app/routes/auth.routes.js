@@ -73,3 +73,12 @@ module.exports = function (app) {
     }
   });
 };
+
+/*
+Everyone in it together
+Walk through conflict in a way that's connecting
+Feedback for framework, making that nourishing, especially for the tough stuff
+Mention the book the Advantage - organizational health
+Reflective listenting, clarifying questions
+Emphasizing empathy and connection
+*/

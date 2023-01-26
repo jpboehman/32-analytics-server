@@ -80,14 +80,15 @@ exports.signin = (req, res) => {
         return res.status(404).send({ message: 'User Not found.' });
       }
 
-      var passwordIsValid = bcrypt.compareSync(
+      
+      const passwordIsValid = bcrypt.compareSync(
         req.body.password,
         user.password
       );
 
       if (!passwordIsValid) {
         return res.status(401).send({ accessToken: null, message: 'Invalid password' })
-      }
+      } 
 
       // This server-side code creates the token once a user is validated, and is returned in the response
       // Every subsequent request from the client will contain that JWT to ensure the party is authenticated
@@ -109,6 +110,7 @@ exports.signin = (req, res) => {
     });
 };
 
+// Responsible for locating the user, generating a token and emailing it to the user to ensure they provide it when they re-enter email
 exports.forgotPassword = (req, res) => {
   User.findOne({
     email: req.body.email
@@ -127,7 +129,7 @@ exports.forgotPassword = (req, res) => {
       const token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: 86400,
       });
-      // User update working
+      // Add the resetPasswordToken to the database for the user
       await user.update({
         resetPasswordToken: token,
         resetPasswordExpires: Date.now() + 3600000
@@ -191,7 +193,7 @@ exports.reset = (req, res) => {
 
 const BCRYPT_SALT_ROUNDS = 8;
 exports.updatePasswordViaEmail = (req, res) => {
-  console.log(req.body)
+  // Locating the user and ensuring they have the token we generated for them in the previous resetPassword step
   User.findOne({
     username: req.body.username,
     resetPasswordToken: req.body.resetPasswordToken,
@@ -204,6 +206,9 @@ exports.updatePasswordViaEmail = (req, res) => {
       if (err) {
         res.status(500).send({ message: 'Password reset link invalid or has expired' });
         return;
+      }
+      if (err) {
+        res.status(500).send({ message: 'Password reset link is invalid or expired' });
       }
       if (!user) {
         return res.status(404).send({ message: 'User Not found.' });
