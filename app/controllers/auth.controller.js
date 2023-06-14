@@ -17,13 +17,10 @@ exports.signup = (req, res) => {
   });
 
   user.save((err, user) => {
-    debugger;
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
-
-    console.log(`Making it here? ${JSON.stringify(user)}`);
   });
 };
 
@@ -37,7 +34,6 @@ exports.signin = (req, res) => {
         res.status(500).send({ message: err });
         return;
       }
-      console.log(`user is: ${user}`);
 
       if (!user) {
         return res.status(404).send({ message: "User Not found." });
@@ -64,8 +60,6 @@ exports.signin = (req, res) => {
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
-
-      console.log(`user at line 87: ${JSON.stringify(user)}`);
 
       res.status(200).send({
         id: user._id,
