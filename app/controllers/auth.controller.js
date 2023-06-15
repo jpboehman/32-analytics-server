@@ -28,7 +28,7 @@ exports.signin = (req, res) => {
   User.findOne({
     email: req.body.email,
   })
-    .populate("roles", "-__v")
+    // .populate("roles", "-__v")
     .exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
@@ -57,15 +57,15 @@ exports.signin = (req, res) => {
       });
       var authorities = [];
 
-      for (let i = 0; i < user.roles.length; i++) {
-        authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
-      }
+      // for (let i = 0; i < user.roles.length; i++) {
+      //   authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
+      // }
 
       res.status(200).send({
         id: user._id,
         username: user.username,
         email: user.email,
-        roles: authorities,
+        // roles: authorities,
         accessToken: token,
       });
     });
