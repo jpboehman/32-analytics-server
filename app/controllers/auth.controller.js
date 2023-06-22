@@ -9,19 +9,38 @@ var bcrypt = require("bcryptjs");
 
 require("dotenv").config();
 
-exports.signup = (req, res) => {
-  const user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8),
-  });
+exports.signup = async (req, res) => {
+  try {
+    // Ensuring that the email and username are not already taken
+    const existingUser = await User.findOne({
+      $or: [{ email: req.body.email }, { username: req.body.username }],
+    });
 
-  user.save((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
+    if (existingUser) {
+      if (existingUser.email === req.body.email) {
+        return res
+          .status(400)
+          .send({ message: "Email is already registered." });
+      }
+      if (existingUser.username === req.body.username) {
+        return res.status(400).send({ message: "Username is already taken." });
+      }
+    } else {
+      const user = new User({
+        username: req.body.username,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+      });
+
+      const savedUser = await user.save();
+      res.send({
+        message: "User was registered successfully!",
+        user: savedUser,
+      });
     }
-  });
+  } catch (err) {
+    res.status(500).send({ message: err });
+  }
 };
 
 exports.signin = (req, res) => {
