@@ -7,7 +7,6 @@ const mongoose = require("mongoose");
 // POST
 exports.uploadGameGrades = async (req, res) => {
   try {
-    const userId = req.params.userId;
     const columns = Object.keys(req.body[0]).map((column) => camelCase(column));
     const gameGrades = req.body.map((row) => {
       const grade = {};
@@ -23,7 +22,7 @@ exports.uploadGameGrades = async (req, res) => {
           value: grade[column] || null,
         };
       });
-      return { fields, userId };
+      return { fields };
     });
     const insertGameGrades = await GameGrades.insertMany(gameGrades);
     if (insertGameGrades.length === 0)
@@ -37,8 +36,8 @@ exports.uploadGameGrades = async (req, res) => {
 // GET
 exports.getGameGrades = async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const getAllGameGrades = await GameGrades.find({ userId }).exec();
+    // Getting all player game-grades
+    const getAllGameGrades = await GameGrades.find({}).exec();
     if (!getAllGameGrades) throw new Error("Failed to retrieve Game grades.");
     res.json({
       gameGrades: getAllGameGrades,

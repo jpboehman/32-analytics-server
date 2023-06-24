@@ -11,7 +11,7 @@ module.exports = function (app) {
     app.get(
         '/api/ncaa-d1-mens-game-grades',
         cors(),
-        controller.getCompanies
+        controller.getGameGrades
     );
     // app.get(
     //     '/api/:userId/companies/:selectedCompanyId',
