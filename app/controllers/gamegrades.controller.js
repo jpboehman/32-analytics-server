@@ -35,15 +35,27 @@ exports.uploadGameGrades = async (req, res) => {
 
 // GET
 exports.getGameGrades = async (req, res) => {
-  try {
-    // Getting all player game-grades
-    const getAllGameGrades = await GameGrades.find({}).exec();
-    if (!getAllGameGrades) throw new Error("Failed to retrieve Game grades.");
-    res.json({
-      gameGrades: getAllGameGrades,
-      numItems: getAllGameGrades.length,
-    });
-  } catch (error) {
-    res.json(error);
-  }
-};
+    try {
+        // Limiting and data-pgination
+      const { limit = 100, page = 1 } = req.query;
+  
+      const skip = (page - 1) * limit;
+  
+      const getAllGameGrades = await GameGrades.find({})
+        .skip(skip)
+        .limit(parseInt(limit))
+        .exec();
+  
+      if (!getAllGameGrades) {
+        throw new Error("Failed to retrieve Game grades.");
+      }
+  
+      res.json({
+        gameGrades: getAllGameGrades,
+        numItems: getAllGameGrades.length,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  };
+  
