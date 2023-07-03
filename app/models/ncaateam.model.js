@@ -10,15 +10,15 @@ const fieldSchema = new mongoose.Schema(
   { _id: false }
 );
 
-const NcaaTeams = mongoose.model(
+const NcaaTeam = mongoose.model(
   "NcaaTeams",
   new mongoose.Schema(
     {
       // userId: { type: String },
       fields: [fieldSchema],
     },
-    { collection: "ncaateams" }
+    { collection: "ncaateam" }
   )
 );
 
-module.exports = NcaaTeams;
+module.exports = NcaaTeam;
