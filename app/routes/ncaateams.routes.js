@@ -12,10 +12,11 @@ module.exports = function (app) {
   });
 
   app.get("/api/ncaa-d1-mens-teams", cors(), controller.getNcaaTeams);
-  // TODO: Update for clicking on players within team
-  // app.get(
-  //     '/api/:userId/companies/:selectedCompanyId',
-  //     cors(),
-  //     controller.getCompany
-  // );
+
+  // Queries MongoDB database for players by team
+  app.get(
+    "/api/ncaa-d1-mens-team/:team",
+    cors(),
+    controller.getNcaaTeamRoster
+  );
 };
