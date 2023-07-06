@@ -6,7 +6,6 @@ const { camelCase } = require("lodash");
 const mongoose = require("mongoose");
 
 // GET
-// TODO: Add team Id for this
 exports.getNcaaTeams = async (req, res) => {
   try {
     // Limiting and data-pgination

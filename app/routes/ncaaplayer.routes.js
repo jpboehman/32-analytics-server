@@ -11,6 +11,6 @@ module.exports = function (app) {
     next();
   });
 
-  // Queries MongoDB database for players by team
-  app.get("/api/ncaa-d1-mens-team/:id", cors(), controller.getNcaaPlayer);
+  // Queries MongoDB database for players by ObjectId
+  app.get("/api/ncaa-d1-mens-player/:id", cors(), controller.getNcaaPlayer);
 };

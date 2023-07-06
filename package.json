@@ -4,7 +4,8 @@
   "description": "Node.js + MongoDB: JWT Authentication & Authorization",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test": "jest"
   },
   "keywords": [
     "node.js",
@@ -24,9 +25,13 @@
     "express": "^4.17.1",
     "heroku": "^7.66.0",
     "jsonwebtoken": "^8.5.1",
+    "mongodb-memory-server": "^8.13.0",
     "mongoose": "^5.9.1",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
     "stripe": "^10.15.0"
+  },
+  "devDependencies": {
+    "supertest": "^6.3.3"
   }
 }
