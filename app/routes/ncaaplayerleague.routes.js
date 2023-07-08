@@ -16,4 +16,10 @@ module.exports = function (app) {
     cors(),
     controller.getNcaaPlayerLeague
   );
+
+  app.get(
+    "/api/ncaa-d1-mens-league-players/:playerId",
+    cors(),
+    controller.getSingleNcaaPlayerLeague
+  );
 };

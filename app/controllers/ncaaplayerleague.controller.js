@@ -29,3 +29,25 @@ exports.getNcaaPlayerLeague = async (req, res) => {
     res.json(error);
   }
 };
+
+// GET
+exports.getSingleNcaaPlayerLeague = async (req, res) => {
+  try {
+    const { playerId } = req.params;
+
+    const getNcaaPlayerLeague = await NcaaPlayerLeague.find({
+      _id: playerId,
+    }).exec();
+
+    if (!getNcaaPlayerLeague) {
+      throw new Error("Failed to retrieve League Players.");
+    }
+
+    res.json({
+      ncaaPlayerLeague: getNcaaPlayerLeague,
+      numItems: getNcaaPlayerLeague.length,
+    });
+  } catch (error) {
+    res.json(error);
+  }
+};
