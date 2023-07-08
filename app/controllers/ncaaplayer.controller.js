@@ -7,7 +7,6 @@ require("dotenv").config();
 exports.getNcaaPlayer = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
     // Limiting and data-pgination
     const { limit = 100, page = 1 } = req.query;
 

@@ -55,6 +55,7 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/gamegrades.routes.js")(app);
 require("./app/routes/ncaateams.routes")(app);
 require("./app/routes/ncaaplayer.routes")(app);
+require("./app/routes/ncaaplayerleague.routes")(app);
 
 function startServer() {
   const PORT = process.env.PORT || 8080;

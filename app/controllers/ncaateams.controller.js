@@ -46,6 +46,12 @@ exports.getNcaaTeamRoster = async (req, res) => {
       .limit(parseInt(limit))
       .exec();
 
+    // TODO: Send back data for team to display in banner - see if this works
+    const getNcaaTeamBanner = await NcaaTeam.find({ Team: teamName })
+      .skip(skip)
+      .limit(parseInt(limit))
+      .exec();
+
     if (!getNcaaTeamRoster) {
       throw new Error("Failed to retrieve NCAA Team Roster.");
     }
