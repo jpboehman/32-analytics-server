@@ -2,8 +2,6 @@ const db = require("../models");
 const NcaaTeam = db.ncaateam;
 const NcaaPlayer = db.ncaaplayer;
 require("dotenv").config();
-const { camelCase } = require("lodash");
-const mongoose = require("mongoose");
 
 // GET
 exports.getNcaaTeams = async (req, res) => {
@@ -27,6 +25,25 @@ exports.getNcaaTeams = async (req, res) => {
       numItems: getAllNcaaTeams.length,
     });
   } catch (error) {
+    res.json(error);
+  }
+};
+
+// GET
+exports.getNcaaTeam = async (req, res) => {
+  try {
+    const { teamName } = req.params;
+    const getNcaaTeam = await NcaaTeam.find({ Team: teamName });
+
+    if (!getNcaaTeam) {
+      throw new Error("Failed to retrieve NCAA Team");
+    }
+
+    res.json({
+      ncaaTeam: getNcaaTeam,
+      numsItems: getNcaaTeam.length,
+    });
+  } catch (e) {
     res.json(error);
   }
 };

@@ -13,6 +13,9 @@ module.exports = function (app) {
 
   app.get("/api/ncaa-d1-mens-teams", cors(), controller.getNcaaTeams);
 
+  // Get single NCAA team
+  app.get("/api/ncaa-d1-mens-teams/:teamName", cors(), controller.getNcaaTeam);
+
   // Queries MongoDB database for players by team
   app.get(
     "/api/ncaa-d1-mens-team/:team",
