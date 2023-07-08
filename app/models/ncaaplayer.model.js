@@ -11,7 +11,7 @@ const fieldSchema = new mongoose.Schema(
 );
 
 const NcaaPlayer = mongoose.model(
-  "ncaaplayer",
+  "NcaaPlayer",
   new mongoose.Schema(
     {
       // userId: { type: String },
