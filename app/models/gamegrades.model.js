@@ -11,13 +11,13 @@ const fieldSchema = new mongoose.Schema(
   );
   
   const GameGrades = mongoose.model(
-    'gamegrades',
+    'playergamegrades',
     new mongoose.Schema(
       {
         // userId: { type: String },
         fields: [fieldSchema],
       },
-      { collection: 'gamegrades' }
+      { collection: 'playergamegrades' }
     )
   );
   

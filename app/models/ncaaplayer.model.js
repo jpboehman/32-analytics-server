@@ -11,13 +11,13 @@ const fieldSchema = new mongoose.Schema(
 );
 
 const NcaaPlayer = mongoose.model(
-  "NcaaPlayer",
+  "ncaaplayerseason",
   new mongoose.Schema(
     {
       // userId: { type: String },
       fields: [fieldSchema],
     },
-    { collection: "ncaaplayer" }
+    { collection: "ncaaplayerseason" }
   )
 );
 

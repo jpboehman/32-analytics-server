@@ -36,19 +36,23 @@ exports.uploadGameGrades = async (req, res) => {
 // GET
 exports.getGameGrades = async (req, res) => {
   try {
-    // Limiting and data-pgination
+    const { playerName } = req.params;
     const { limit = 100, page = 1 } = req.query;
 
     const skip = (page - 1) * limit;
 
-    const getAllGameGrades = await GameGrades.find({})
+    console.log(playerName);
+
+    const getAllGameGrades = await GameGrades.find({ Player: playerName })
       .skip(skip)
       .limit(parseInt(limit))
       .exec();
 
     if (!getAllGameGrades) {
-      throw new Error("Failed to retrieve Game grades.");
+      throw new Error("Failed to retrieve Game Grades.");
     }
+
+    console.log(`getGameGrades"" ${JSON.stringify(getAllGameGrades)}`);
 
     res.json({
       gameGrades: getAllGameGrades,
@@ -58,5 +62,3 @@ exports.getGameGrades = async (req, res) => {
     res.json(error);
   }
 };
-
-// TODO: Add GETS for all data here

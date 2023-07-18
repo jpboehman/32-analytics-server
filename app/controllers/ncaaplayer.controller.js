@@ -1,9 +1,10 @@
 const db = require("../models");
-const NcaaPlayer = db.ncaaplayer;
+const NcaaPlayerSeason = db.ncaaplayer;
+const GameGrades = db.gamegrades;
+
 require("dotenv").config();
 
 // GET
-// TODO: Add team Id for this
 exports.getNcaaPlayer = async (req, res) => {
   try {
     const { id } = req.params;
@@ -12,7 +13,7 @@ exports.getNcaaPlayer = async (req, res) => {
 
     const skip = (page - 1) * limit;
 
-    const getSingleNcaaPlayer = await NcaaPlayer.find({ _id: id })
+    const getSingleNcaaPlayer = await NcaaPlayerSeason.find({ _id: id })
       .skip(skip)
       .limit(parseInt(limit))
       .exec();

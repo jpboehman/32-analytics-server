@@ -11,7 +11,7 @@ module.exports = function (app) {
     next();
   });
 
-  app.get("/api/ncaa-d1-mens-game-grades", cors(), controller.getGameGrades);
+  app.get("/api/ncaa-d1-mens-game-grades/:playerName", cors(), controller.getGameGrades);
 
   app.post(
     "/api/ncaa-d1-mens/upload-game-grades",
