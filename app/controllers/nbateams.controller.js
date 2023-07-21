@@ -21,8 +21,8 @@ exports.getNbaTeams = async (req, res) => {
     }
 
     res.json({
-      ncaaTeams: getAllNcaaTeams,
-      numItems: getAllNcaaTeams.length,
+      nbaTeams: getAllNbaTeams,
+      numItems: getAllNbaTeams.length,
     });
   } catch (error) {
     res.json(error);
@@ -33,15 +33,15 @@ exports.getNbaTeams = async (req, res) => {
 exports.getNbaTeam = async (req, res) => {
   try {
     const { teamName } = req.params;
-    const getNcaaTeam = await NcaaTeam.find({ Team: teamName });
+    const getNbaTeam = await NbaTeam.find({ Team: teamName });
 
-    if (!getNcaaTeam) {
+    if (!getNbaTeam) {
       throw new Error("Failed to retrieve NCAA Team");
     }
 
     res.json({
-      ncaaTeam: getNcaaTeam,
-      numsItems: getNcaaTeam.length,
+      nbaTeam: getNbaTeam,
+      numItems: getNbaTeam.length,
     });
   } catch (e) {
     res.json(error);
@@ -49,8 +49,7 @@ exports.getNbaTeam = async (req, res) => {
 };
 
 // GET
-// TODO: Add team Id for this
-exports.getNcaaTeamRoster = async (req, res) => {
+exports.getNbaTeamRoster = async (req, res) => {
   try {
     // Limiting and data-pgination
     const { limit = 100, page = 1 } = req.query;
@@ -58,18 +57,18 @@ exports.getNcaaTeamRoster = async (req, res) => {
 
     const skip = (page - 1) * limit;
 
-    const getNcaaTeamRoster = await NcaaPlayer.find({ Team: teamName })
+    const getNbaTeamRoster = await NbaPlayer.find({ Team: teamName })
       .skip(skip)
       .limit(parseInt(limit))
       .exec();
 
-    if (!getNcaaTeamRoster) {
+    if (!getNbaTeamRoster) {
       throw new Error("Failed to retrieve NCAA Team Roster.");
     }
 
     res.json({
-      teamRoster: getNcaaTeamRoster,
-      numItems: getNcaaTeamRoster.length,
+      teamRoster: getNbaTeamRoster,
+      numItems: getNbaTeamRoster.length,
     });
   } catch (error) {
     res.json(error);
