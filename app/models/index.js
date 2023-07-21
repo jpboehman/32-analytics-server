@@ -12,10 +12,11 @@ db.role = require("./role.model");
 db.gamegrades = require("./gamegrades.model");
 db.ncaaleague = require("./ncaaleague.model");
 db.ncaaplayer = require("./ncaaplayer.model");
+db.nbaplayer = require("./nbaplayer.model");
 db.ncaaplayerleague = require("./ncaaplayerleague.model");
+db.nbaplayerleague = require("./nbaplayerleague.model");
 db.ncaateam = require("./ncaateam.model");
 db.nbateam = require("./nbateam.model");
-db.nbaplayer = require("./nbaplayer.model");
 
 db.ROLES = ["user", "admin", "moderator"];
 

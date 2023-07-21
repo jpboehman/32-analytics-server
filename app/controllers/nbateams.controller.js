@@ -16,8 +16,8 @@ exports.getNbaTeams = async (req, res) => {
       .limit(parseInt(limit))
       .exec();
 
-    if (!getAllNcaaTeams) {
-      throw new Error("Failed to retrieve NCAA Teams.");
+    if (!getAllNbaTeams) {
+      throw new Error("Failed to retrieve NBA Teams.");
     }
 
     res.json({
