@@ -14,6 +14,8 @@ db.ncaaleague = require("./ncaaleague.model");
 db.ncaaplayer = require("./ncaaplayer.model");
 db.ncaaplayerleague = require("./ncaaplayerleague.model");
 db.ncaateam = require("./ncaateam.model");
+db.nbateam = require("./nbateam.model");
+db.nbaplayer = require("./nbaplayer.model");
 
 db.ROLES = ["user", "admin", "moderator"];
 

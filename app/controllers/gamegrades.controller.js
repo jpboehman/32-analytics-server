@@ -36,27 +36,29 @@ exports.uploadGameGrades = async (req, res) => {
 // GET
 exports.getGameGrades = async (req, res) => {
   try {
-    const { playerName } = req.params;
+    const { playerName, selectedSeason = "2022-23" } = req.params;
+    console.log(`selectedSeason ${selectedSeason}`);
     const { limit = 100, page = 1 } = req.query;
 
     const skip = (page - 1) * limit;
 
-    console.log(playerName);
-
-    const getAllGameGrades = await GameGrades.find({ Player: playerName })
+    // CURRENT:
+    // Waiting for Season to get added to DB collection as a column
+    const getGameGrades = await GameGrades.find({
+      Player: playerName,
+      Season: selectedSeason,
+    })
       .skip(skip)
       .limit(parseInt(limit))
       .exec();
 
-    if (!getAllGameGrades) {
+    if (!getGameGrades) {
       throw new Error("Failed to retrieve Game Grades.");
     }
 
-    console.log(`getGameGrades"" ${JSON.stringify(getAllGameGrades)}`);
-
     res.json({
-      gameGrades: getAllGameGrades,
-      numItems: getAllGameGrades.length,
+      gameGrades: getGameGrades,
+      numItems: getGameGrades.length,
     });
   } catch (error) {
     res.json(error);
