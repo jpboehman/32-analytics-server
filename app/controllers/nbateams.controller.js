@@ -1,6 +1,7 @@
 const db = require("../models");
 const NbaTeam = db.nbateam;
 const NbaPlayer = db.nbaplayer;
+const NbaAbbreviationMap = require("../utils/nba-utils");
 require("dotenv").config();
 
 // GET
@@ -55,15 +56,19 @@ exports.getNbaTeamRoster = async (req, res) => {
     const { limit = 100, page = 1 } = req.query;
     const teamName = req.params.team;
 
+    /*  NOTE: This is a sensitive area - if any of the translations differ from what is in NbaAbbreviationMap and the spreadsheet,
+        then 0 results could be returned
+    */
+    const abbreviatedName = NbaAbbreviationMap.get(teamName);
     const skip = (page - 1) * limit;
 
-    const getNbaTeamRoster = await NbaPlayer.find({ Team: teamName })
+    const getNbaTeamRoster = await NbaPlayer.find({ Tm: abbreviatedName })
       .skip(skip)
       .limit(parseInt(limit))
       .exec();
 
     if (!getNbaTeamRoster) {
-      throw new Error("Failed to retrieve NCAA Team Roster.");
+      throw new Error("Failed to retrieve NBA Team Roster.");
     }
 
     res.json({

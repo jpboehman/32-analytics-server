@@ -55,6 +55,7 @@ require("./app/routes/user.routes")(app);
 require("./app/routes/gamegrades.routes")(app);
 require("./app/routes/ncaateams.routes")(app);
 require("./app/routes/nbateams.routes")(app);
+require("./app/routes/nbaplayer.routes")(app);
 require("./app/routes/ncaaplayer.routes")(app);
 require("./app/routes/ncaaplayerleague.routes")(app);
 
