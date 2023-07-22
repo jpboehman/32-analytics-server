@@ -44,7 +44,7 @@ exports.getSingleNbaPlayerLeague = async (req, res) => {
     }
 
     res.json({
-      getNbaPlayerLeague: getNbaPlayerLeague,
+      nbaPlayerLeague: getNbaPlayerLeague,
       numItems: getNbaPlayerLeague.length,
     });
   } catch (error) {

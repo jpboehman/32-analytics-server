@@ -1,5 +1,5 @@
 const db = require("../models");
-const GameGrades = db.gamegrades;
+const NbaGameGrades = db.nbagamegrades;
 require("dotenv").config();
 const { camelCase } = require("lodash");
 const mongoose = require("mongoose");
@@ -43,7 +43,7 @@ exports.getGameGrades = async (req, res) => {
 
     // CURRENT:
     // Waiting for Season to get added to DB collection as a column
-    const getGameGrades = await GameGrades.find({
+    const getGameGrades = await NbaGameGrades.find({
       Player: playerName,
       Season: selectedSeason,
     })

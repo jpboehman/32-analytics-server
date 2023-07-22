@@ -1,6 +1,6 @@
 /* eslint-disable strict */
 const cors = require("cors");
-const controller = require("../controllers/gamegrades.controller");
+const controller = require("../controllers/nbagamegrades.controller");
 
 module.exports = function (app) {
   app.use((req, res, next) => {
@@ -12,7 +12,7 @@ module.exports = function (app) {
   });
 
   app.get(
-    "/api/ncaa-d1-mens-game-grades/:playerName/:selectedSeason",
+    "/api/nba-game-grades/:playerName/:selectedSeason",
     cors(),
     controller.getGameGrades
   );

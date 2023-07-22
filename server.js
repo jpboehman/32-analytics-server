@@ -58,6 +58,7 @@ require("./app/routes/nbateams.routes")(app);
 require("./app/routes/nbaplayer.routes")(app);
 require("./app/routes/ncaaplayer.routes")(app);
 require("./app/routes/ncaaplayerleague.routes")(app);
+require("./app/routes/nbaplayerleague.routes")(app);
 
 function startServer() {
   const PORT = process.env.PORT || 8080;

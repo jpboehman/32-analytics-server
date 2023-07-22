@@ -10,16 +10,16 @@ const fieldSchema = new mongoose.Schema(
     { _id: false }
   );
   
-  const NcaaPlayerLeague = mongoose.model(
-    'ncaaplayerleague',
+  const NbaGameGrades = mongoose.model(
+    'nbaplayergamegrades',
     new mongoose.Schema(
       {
         // userId: { type: String },
         fields: [fieldSchema],
       },
-      { collection: 'ncaaplayerleague' }
+      { collection: 'nbaplayergamegrades' }
     )
   );
   
 
-module.exports = NcaaPlayerLeague;
+module.exports = NbaGameGrades;

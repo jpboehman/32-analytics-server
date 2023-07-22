@@ -10,6 +10,7 @@ db.role = require("./role.model");
 
 // 32A Models
 db.gamegrades = require("./gamegrades.model");
+db.nbagamegrades = require("./nbagamegrades.model");
 db.ncaaleague = require("./ncaaleague.model");
 db.ncaaplayer = require("./ncaaplayer.model");
 db.nbaplayer = require("./nbaplayer.model");
