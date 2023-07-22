@@ -53,6 +53,7 @@ app.get("/", (req, res) => {
 require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 require("./app/routes/gamegrades.routes")(app);
+require("./app/routes/nbagamegrades.routes")(app);
 require("./app/routes/ncaateams.routes")(app);
 require("./app/routes/nbateams.routes")(app);
 require("./app/routes/nbaplayer.routes")(app);
