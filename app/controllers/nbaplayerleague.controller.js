@@ -22,7 +22,7 @@ exports.getNbaPlayerLeague = async (req, res) => {
     }
 
     res.json({
-      nbaPlayerLeague: getNbaPlayerLeague,
+      nbaPlayer: getNbaPlayerLeague,
       numItems: getNbaPlayerLeague.length,
     });
   } catch (error) {
@@ -30,13 +30,12 @@ exports.getNbaPlayerLeague = async (req, res) => {
   }
 };
 
-// GET
 exports.getSingleNbaPlayerLeague = async (req, res) => {
   try {
     const { playerId } = req.params;
 
     const getNbaPlayerLeague = await NbaPlayerLeague.find({
-      _id: playerId,
+      _id: mongoose.Types.ObjectId(playerId),
     }).exec();
 
     if (!getNbaPlayerLeague) {
@@ -44,9 +43,11 @@ exports.getSingleNbaPlayerLeague = async (req, res) => {
     }
 
     res.json({
-      nbaPlayerLeague: getNbaPlayerLeague,
+      nbaPlayer: getNbaPlayerLeague,
       numItems: getNbaPlayerLeague.length,
     });
+
+    // remaining logic
   } catch (error) {
     res.json(error);
   }

@@ -22,7 +22,7 @@ exports.getNbaPlayer = async (req, res) => {
     }
 
     res.json({
-      ncaaPlayer: getSingleNbaPlayer,
+      nbaPlayer: getSingleNbaPlayer,
       numItems: getSingleNbaPlayer.length,
     });
   } catch (error) {
